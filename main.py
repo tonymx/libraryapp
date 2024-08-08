@@ -22,12 +22,6 @@ def searchAuthor_by_name(name):
                     return b
     return None
 
-def bookIsBorrowed(book_id):
-    for b in db_borrows:
-        if b.book.id == id:
-            return True
-    return False
-
 def searchBook_by_title(title):
     for b in db_books:
                 if b.title.lower() == title.lower():
@@ -68,21 +62,10 @@ def addBook():
           if respuesta.lower()=="si":
             new_book=Book(book_title)
             author_record=searchAuthor_by_book(book_title)
-            print(f"author_record={author_record}")
             if author_record is None:
                print("No se encontro al Autor")
-                # print("No existe el Autor")
-                # new_author=Author(author_name)
-                # new_book.author=new_author
-                # new_author.books.append(new_book)
-                # db_books.append(new_book)
-                # db_authors.append(new_author)
-                # print("Libro agregado")
-                # table = [['Id_libro','Titulo_Libro','Id_Autor','Nombre_Autor'], [new_book.id,new_book.title,new_book.author.id,new_book.author.name]]
-                # print(tabulate(table, headers='firstrow', tablefmt='fancy_grid'))
             else:
                 new_book.author=author_record
-                #author_record.books.append(new_book)
                 db_books.append(new_book)
                 print("Libro agregado")
                 table = [['Id_libro','Titulo_Libro','Id_Autor','Nombre_Autor'], [new_book.id,new_book.title,new_book.author.id,new_book.author.name]]
@@ -91,9 +74,8 @@ def addBook():
             new_book=Book(book_title)
             author_name=input("Por favor proporciona el nombre del autor: ")
             author_record=searchAuthor_by_name(author_name)
-            print(f"author_record={author_record}")
             if author_record is None:
-                print("No existe el Autor")
+                #print("No existe el Autor")
                 new_author=Author(author_name)
                 new_book.author=new_author
                 new_author.books.append(new_book)
@@ -139,7 +121,6 @@ def viewBorrows():
         rows.append(header)
         for b in db_borrows:
             rows.append([b.id,b.reader_name,b.book.title,b.book.author.name,b.date_borrowed,b.date_return])
-            #table = [['Book_Id','Book_Title','Author_id','Author_name'], [b.id,b.title,b.author.id,b.author.name]]
         print(tabulate(rows, headers='firstrow', tablefmt='fancy_grid'))
     else:
          print("*** No hay prestamos registrados ***")  
